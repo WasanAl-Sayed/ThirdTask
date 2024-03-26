@@ -14,7 +14,6 @@
 		2F3052782BAC484400452398 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F3052772BAC484400452398 /* Assets.xcassets */; };
 		2F30527B2BAC484400452398 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F3052792BAC484400452398 /* LaunchScreen.storyboard */; };
 		2F3052832BACCC8E00452398 /* ColorListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3052822BACCC8E00452398 /* ColorListModel.swift */; };
-		2FA254F52BAF3F8800EEFE48 /* ConstraintsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA254F42BAF3F8800EEFE48 /* ConstraintsHelper.swift */; };
 		2FA254F72BAF612500EEFE48 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA254F62BAF612500EEFE48 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +27,6 @@
 		2F30527A2BAC484400452398 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F30527C2BAC484400452398 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F3052822BACCC8E00452398 /* ColorListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorListModel.swift; sourceTree = "<group>"; };
-		2FA254F42BAF3F8800EEFE48 /* ConstraintsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintsHelper.swift; sourceTree = "<group>"; };
 		2FA254F62BAF612500EEFE48 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,7 +65,6 @@
 				2F3052822BACCC8E00452398 /* ColorListModel.swift */,
 				2F3052722BAC484200452398 /* ViewController.swift */,
 				2FA254F62BAF612500EEFE48 /* Constants.swift */,
-				2FA254F42BAF3F8800EEFE48 /* ConstraintsHelper.swift */,
 				2F3052742BAC484200452398 /* Main.storyboard */,
 				2F3052772BAC484400452398 /* Assets.xcassets */,
 				2F3052792BAC484400452398 /* LaunchScreen.storyboard */,
@@ -149,7 +146,6 @@
 			files = (
 				2F3052732BAC484200452398 /* ViewController.swift in Sources */,
 				2F30526F2BAC484200452398 /* AppDelegate.swift in Sources */,
-				2FA254F52BAF3F8800EEFE48 /* ConstraintsHelper.swift in Sources */,
 				2F3052712BAC484200452398 /* SceneDelegate.swift in Sources */,
 				2F3052832BACCC8E00452398 /* ColorListModel.swift in Sources */,
 				2FA254F72BAF612500EEFE48 /* Constants.swift in Sources */,
