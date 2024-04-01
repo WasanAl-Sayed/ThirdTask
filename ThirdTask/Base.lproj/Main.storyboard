@@ -119,12 +119,12 @@
                                 <exclude reference="Tf2-pM-YMb"/>
                                 <exclude reference="KcI-9h-nzX"/>
                                 <exclude reference="nkb-fF-D08"/>
-                                <exclude reference="X6G-aM-wIC"/>
                                 <exclude reference="YAI-sB-ODl"/>
+                                <exclude reference="X6G-aM-wIC"/>
                                 <exclude reference="hFj-lO-NeH"/>
+                                <exclude reference="Qxe-P3-843"/>
                                 <exclude reference="Uxj-vO-CDo"/>
                                 <exclude reference="Bfz-qA-Z84"/>
-                                <exclude reference="Qxe-P3-843"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -142,8 +142,8 @@
                                 <include reference="IK9-3S-5Co"/>
                                 <include reference="KcI-9h-nzX"/>
                                 <include reference="YAI-sB-ODl"/>
-                                <include reference="Uxj-vO-CDo"/>
                                 <include reference="Qxe-P3-843"/>
+                                <include reference="Uxj-vO-CDo"/>
                             </mask>
                         </variation>
                     </view>
