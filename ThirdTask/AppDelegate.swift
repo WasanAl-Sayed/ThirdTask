@@ -14,8 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        ColorListModel.storeDescreption()
-        ColorListModel.storeColors()
+        UserDefaultsManager.storeColorsList()
         return true
     }
 

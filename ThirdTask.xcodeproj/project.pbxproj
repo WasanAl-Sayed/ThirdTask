@@ -14,6 +14,7 @@
 		2F3052782BAC484400452398 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F3052772BAC484400452398 /* Assets.xcassets */; };
 		2F30527B2BAC484400452398 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F3052792BAC484400452398 /* LaunchScreen.storyboard */; };
 		2F3052832BACCC8E00452398 /* ColorListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3052822BACCC8E00452398 /* ColorListModel.swift */; };
+		2F8711922BBC141E00411EAC /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8711912BBC141E00411EAC /* UserDefaultsManager.swift */; };
 		2FA254F72BAF612500EEFE48 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA254F62BAF612500EEFE48 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		2F30527A2BAC484400452398 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F30527C2BAC484400452398 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F3052822BACCC8E00452398 /* ColorListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorListModel.swift; sourceTree = "<group>"; };
+		2F8711912BBC141E00411EAC /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		2FA254F62BAF612500EEFE48 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +64,7 @@
 			children = (
 				2F30526E2BAC484200452398 /* AppDelegate.swift */,
 				2F3052702BAC484200452398 /* SceneDelegate.swift */,
+				2F8711912BBC141E00411EAC /* UserDefaultsManager.swift */,
 				2F3052822BACCC8E00452398 /* ColorListModel.swift */,
 				2F3052722BAC484200452398 /* ViewController.swift */,
 				2FA254F62BAF612500EEFE48 /* Constants.swift */,
@@ -146,6 +149,7 @@
 			files = (
 				2F3052732BAC484200452398 /* ViewController.swift in Sources */,
 				2F30526F2BAC484200452398 /* AppDelegate.swift in Sources */,
+				2F8711922BBC141E00411EAC /* UserDefaultsManager.swift in Sources */,
 				2F3052712BAC484200452398 /* SceneDelegate.swift in Sources */,
 				2F3052832BACCC8E00452398 /* ColorListModel.swift in Sources */,
 				2FA254F72BAF612500EEFE48 /* Constants.swift in Sources */,
