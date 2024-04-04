@@ -12,24 +12,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var contentDescription: UILabel!
-    var colorsList: [ColorListModel] = []
+    var viewModel: ColorListViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        colorsList = UserDefaultsManager.retrieveColorsList()
-        tableView.dataSource = self
-        tableView.delegate = self
+        viewModel = ColorListViewModel()
     }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return colorsList.count
+        return viewModel.numberOfColors()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell", for: indexPath)
-        let color = colorsList[indexPath.row].getColor()
+        let color = viewModel.colorAtIndex(indexPath.row)
         let name = color?.accessibilityName.capitalized
         cell.backgroundColor = color
         var content = cell.defaultContentConfiguration()
@@ -40,10 +38,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        contentView.backgroundColor = colorsList[indexPath.row].getColor()
-        contentDescription.text = colorsList[indexPath.row].description
+        contentView.backgroundColor = viewModel.colorAtIndex(indexPath.row)
+        contentDescription.text = viewModel.descriptionAtIndex(indexPath.row)
     }
 }
-
-
-
