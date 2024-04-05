@@ -12,11 +12,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var contentDescription: UILabel!
-    var viewModel: ColorListViewModel!
+    private let viewModel = ColorListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = ColorListViewModel()
     }
 }
 

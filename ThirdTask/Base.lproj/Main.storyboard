@@ -67,8 +67,8 @@
                                     <constraint firstItem="mnT-qA-e7m" firstAttribute="top" secondItem="yyX-3W-YU8" secondAttribute="bottom" constant="20" id="0hZ-lQ-Zin"/>
                                     <constraint firstItem="yyX-3W-YU8" firstAttribute="top" secondItem="9bq-R1-IXp" secondAttribute="top" constant="20" id="BjY-Li-kdd"/>
                                     <constraint firstItem="yyX-3W-YU8" firstAttribute="leading" secondItem="9bq-R1-IXp" secondAttribute="leading" constant="20" id="FNU-d7-kDi"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yyX-3W-YU8" secondAttribute="trailing" constant="20" symbolic="YES" id="cwK-mY-1cW"/>
                                     <constraint firstItem="mnT-qA-e7m" firstAttribute="leading" secondItem="9bq-R1-IXp" secondAttribute="leading" constant="20" id="hZZ-y5-UVX"/>
-                                    <constraint firstAttribute="trailing" secondItem="yyX-3W-YU8" secondAttribute="trailing" constant="264" id="maU-Cs-Yj0"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -109,16 +109,7 @@
                                 <exclude reference="Bfz-qA-Z84"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular">
-                            <mask key="constraints">
-                                <include reference="kqZ-kH-xiQ"/>
-                                <include reference="Tf2-pM-YMb"/>
-                                <include reference="X6G-aM-wIC"/>
-                                <include reference="hFj-lO-NeH"/>
-                                <include reference="Bfz-qA-Z84"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=compact-widthClass=compact">
+                        <variation key="heightClass=compact">
                             <mask key="constraints">
                                 <include reference="IK9-3S-5Co"/>
                                 <include reference="xid-zD-pj7"/>
@@ -128,9 +119,14 @@
                                 <include reference="Uxj-vO-CDo"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
+                        <variation key="heightClass=regular">
                             <mask key="constraints">
+                                <include reference="kqZ-kH-xiQ"/>
+                                <include reference="Tf2-pM-YMb"/>
                                 <include reference="P7S-ep-U70"/>
+                                <include reference="X6G-aM-wIC"/>
+                                <include reference="hFj-lO-NeH"/>
+                                <include reference="Bfz-qA-Z84"/>
                             </mask>
                         </variation>
                     </view>
