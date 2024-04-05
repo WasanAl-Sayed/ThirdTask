@@ -12,10 +12,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var contentDescription: UILabel!
+    @IBOutlet weak var reorderButton: UIBarButtonItem!
     private let viewModel = ColorListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    @IBAction func reorderCells(_ sender: UIBarButtonItem) {
+        if tableView.isEditing {
+            tableView.isEditing = false
+            reorderButton.title = "Edit"
+        } else {
+            tableView.isEditing = true
+            reorderButton.title = "Done"
+        }
     }
 }
 
@@ -39,5 +50,21 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         contentView.backgroundColor = viewModel.colorAtIndex(indexPath.row)
         contentDescription.text = viewModel.descriptionAtIndex(indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        viewModel.reorderCells(from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
     }
 }
