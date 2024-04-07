@@ -9,29 +9,20 @@ import UIKit
 
 struct UserDefaultsManager: Codable {
     
-    var colorData: Data
-    var description: String
-        
-    init(color: UIColor, description: String) {
-        self.colorData = try! NSKeyedArchiver.archivedData(withRootObject: color, requiringSecureCoding: false)
-        self.description = description
-    }
-        
-    func getColor() -> UIColor? {
+    static func storeColorsList (colorsList: [ColorListModel]) {
         do {
-            if let color = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: colorData) {
-                return color
-            }
+            let encodedData = try JSONEncoder().encode(colorsList)
+            UserDefaults.standard.set(encodedData, forKey: "colorsList")
+
         } catch {
-            print("Error: Unable to unarchive color - \(error)")
+            print("Error: Unable to encode colorsList - \(error)")
         }
-        return nil
     }
     
-    static func retrieveColorsList () -> [UserDefaultsManager] {
+    static func retrieveColorsList () -> [ColorListModel] {
         if let savedData = UserDefaults.standard.object(forKey: "colorsList") as? Data {
             do {
-                let colorsList = try JSONDecoder().decode([UserDefaultsManager].self, from: savedData)
+                let colorsList = try JSONDecoder().decode([ColorListModel].self, from: savedData)
                 return colorsList
             } catch {
                 print("Error: Unable to decode colorsList - \(error)")

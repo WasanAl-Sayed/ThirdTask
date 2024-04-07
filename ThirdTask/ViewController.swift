@@ -20,24 +20,20 @@ class ViewController: UIViewController {
     }
     
     @IBAction func reorderCells(_ sender: UIBarButtonItem) {
-        if tableView.isEditing {
-            tableView.isEditing = false
-            reorderButton.title = "Edit"
-        } else {
-            tableView.isEditing = true
-            reorderButton.title = "Done"
-        }
+        let isEditing = tableView.isEditing
+        tableView.isEditing = !isEditing
+        reorderButton.title = isEditing ? "Edit" : "Done"
     }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfColors()
+        return viewModel.colorsList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableViewCell", for: indexPath)
-        let color = viewModel.colorAtIndex(indexPath.row)
+        let color = viewModel.colorsList[indexPath.row].getColor()
         let name = color?.accessibilityName.capitalized
         cell.backgroundColor = color
         var content = cell.defaultContentConfiguration()
@@ -48,8 +44,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        contentView.backgroundColor = viewModel.colorAtIndex(indexPath.row)
-        contentDescription.text = viewModel.descriptionAtIndex(indexPath.row)
+        contentView.backgroundColor = viewModel.colorsList[indexPath.row].getColor()
+        contentDescription.text = viewModel.colorsList[indexPath.row].description
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
