@@ -43,11 +43,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        contentView.backgroundColor = viewModel.colorsList[indexPath.row].getColor()
-        contentDescription.text = viewModel.colorsList[indexPath.row].description
-    }
-    
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -56,11 +51,19 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         viewModel.reorderCells(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
-    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .none
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            viewModel.deleteCells(in: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        contentView.backgroundColor = viewModel.colorsList[indexPath.row].getColor()
+        contentDescription.text = viewModel.colorsList[indexPath.row].description
     }
 }

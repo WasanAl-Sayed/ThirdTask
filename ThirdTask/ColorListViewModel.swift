@@ -16,4 +16,9 @@ class ColorListViewModel {
         colorsList.insert(movedItem, at: destinationIndex)
         UserDefaultsManager.storeColorsList(colorsList: colorsList)
     }
+    
+    func deleteCells(in rowIndex: Int) {
+        colorsList.remove(at: rowIndex)
+        UserDefaultsManager.storeColorsList(colorsList: colorsList)
+    }
 }
