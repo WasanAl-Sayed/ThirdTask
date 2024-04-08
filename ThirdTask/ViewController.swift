@@ -11,18 +11,18 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var contentDescription: UILabel!
-    @IBOutlet weak var reorderButton: UIBarButtonItem!
-    private let viewModel = ColorListViewModel()
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    private let viewModel = ColorViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    @IBAction func reorderCells(_ sender: UIBarButtonItem) {
+    @IBAction func didClickEditButton(_ sender: UIBarButtonItem) {
         let isEditing = tableView.isEditing
         tableView.isEditing = !isEditing
-        reorderButton.title = isEditing ? "Edit" : "Done"
+        editButton.title = isEditing ? "Edit" : "Done"
     }
 }
 
@@ -48,7 +48,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        viewModel.reorderCells(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        viewModel.moveCell(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -64,6 +64,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         contentView.backgroundColor = viewModel.colorsList[indexPath.row].getColor()
-        contentDescription.text = viewModel.colorsList[indexPath.row].description
+        descriptionLabel.text = viewModel.colorsList[indexPath.row].description
     }
 }

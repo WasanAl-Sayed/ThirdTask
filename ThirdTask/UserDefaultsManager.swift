@@ -9,7 +9,7 @@ import UIKit
 
 struct UserDefaultsManager: Codable {
     
-    static func storeColorsList (colorsList: [ColorListModel]) {
+    static func storeColorsList (colorsList: [ColorModel]) {
         do {
             let encodedData = try JSONEncoder().encode(colorsList)
             UserDefaults.standard.set(encodedData, forKey: "colorsList")
@@ -19,10 +19,10 @@ struct UserDefaultsManager: Codable {
         }
     }
     
-    static func retrieveColorsList () -> [ColorListModel] {
+    static func retrieveColorsList () -> [ColorModel] {
         if let savedData = UserDefaults.standard.object(forKey: "colorsList") as? Data {
             do {
-                let colorsList = try JSONDecoder().decode([ColorListModel].self, from: savedData)
+                let colorsList = try JSONDecoder().decode([ColorModel].self, from: savedData)
                 return colorsList
             } catch {
                 print("Error: Unable to decode colorsList - \(error)")

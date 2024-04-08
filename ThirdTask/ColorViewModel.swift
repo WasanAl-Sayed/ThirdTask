@@ -7,11 +7,11 @@
 
 import UIKit
 
-class ColorListViewModel {
+class ColorViewModel {
     
-    private (set) var colorsList: [ColorListModel] = UserDefaultsManager.retrieveColorsList()
+    private (set) var colorsList = UserDefaultsManager.retrieveColorsList()
     
-    func reorderCells(from sourceIndex: Int, to destinationIndex: Int) {
+    func moveCell(from sourceIndex: Int, to destinationIndex: Int) {
         let movedItem = colorsList.remove(at: sourceIndex)
         colorsList.insert(movedItem, at: destinationIndex)
         UserDefaultsManager.storeColorsList(colorsList: colorsList)

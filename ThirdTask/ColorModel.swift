@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct ColorListModel: Codable {
+struct ColorModel: Codable {
     var colorData: Data
     var description: String
     

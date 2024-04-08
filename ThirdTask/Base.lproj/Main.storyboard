@@ -28,7 +28,7 @@
                                         <barButtonItem key="rightBarButtonItem" title="Edit" id="uZd-5d-GKe">
                                             <inset key="largeContentSizeImageInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
                                             <connections>
-                                                <action selector="reorderCells:" destination="BYZ-38-t0r" id="MuW-gN-lIr"/>
+                                                <action selector="didClickEditButton:" destination="BYZ-38-t0r" id="Q6q-HK-rMS"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -139,9 +139,9 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="contentDescription" destination="mnT-qA-e7m" id="PWE-6P-m3i"/>
                         <outlet property="contentView" destination="9bq-R1-IXp" id="fBU-VA-oC8"/>
-                        <outlet property="reorderButton" destination="uZd-5d-GKe" id="Pac-fY-s2k"/>
+                        <outlet property="descriptionLabel" destination="mnT-qA-e7m" id="ejG-DF-Iei"/>
+                        <outlet property="editButton" destination="uZd-5d-GKe" id="AG3-hS-xYX"/>
                         <outlet property="tableView" destination="2XL-sG-1Jb" id="pxh-MH-DG2"/>
                     </connections>
                 </viewController>
