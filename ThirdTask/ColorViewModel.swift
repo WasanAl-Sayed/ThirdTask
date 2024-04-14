@@ -6,10 +6,37 @@
 //
 
 import UIKit
+import CoreData
 
 class ColorViewModel {
     
-    private (set) var colorsList = UserDefaultsManager.retrieveColorsList()
+    var colorsList: [Color] = []
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    func getColors() {
+        do {
+            self.colorsList = try context.fetch(Color.fetchRequest())
+        } catch {
+            print("Error fetching data: \(error)")
+        }
+    }
+    
+    func addColor(title: String, color: UIColor, description: String) {
+        let newColor = Color(context: self.context)
+        newColor.title = title
+        newColor.color = color
+        newColor.desc = description
+        do {
+            try self.context.save()
+        } catch {
+            print("Error saving data: \(error)")
+        }
+    }
+    
+    func deleteColor() {
+    }
+    
+    /*private (set) var colorsList = UserDefaultsManager.retrieveColorsList()
     
     func moveCell(from sourceIndex: Int, to destinationIndex: Int) {
         let movedItem = colorsList.remove(at: sourceIndex)
@@ -20,5 +47,5 @@ class ColorViewModel {
     func deleteCells(in rowIndex: Int) {
         colorsList.remove(at: rowIndex)
         UserDefaultsManager.storeColorsList(colorsList: colorsList)
-    }
+    }*/
 }
