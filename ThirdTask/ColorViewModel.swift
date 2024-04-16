@@ -33,7 +33,16 @@ class ColorViewModel {
         }
     }
     
-    func deleteColor() {
+    func deleteColor(colors: [Color]) {
+        self.getColors()
+        for color in colors {
+            context.delete(color)
+        }
+        do {
+            try context.save()
+        } catch {
+            print("Error deleting color: \(error)")
+        }
     }
     
     /*private (set) var colorsList = UserDefaultsManager.retrieveColorsList()

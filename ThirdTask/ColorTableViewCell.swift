@@ -29,10 +29,6 @@ class ColorTableViewCell: UITableViewCell {
     
     func setEditing(_ editing: Bool) {
         checkbox.isHidden = !editing
-        updateLabelLeadingConstraint()
-    }
-    
-    private func updateLabelLeadingConstraint() {
         titleLabelLeadingConstraint.constant = checkbox.isHidden ? 18 : 50
     }
     

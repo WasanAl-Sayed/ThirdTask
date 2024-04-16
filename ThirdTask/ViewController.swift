@@ -19,7 +19,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.getColors()
-        
         tableView.register(ColorTableViewCell.nib(), forCellReuseIdentifier: ColorTableViewCell.identifier)
     }
     
@@ -41,9 +40,24 @@ class ViewController: UIViewController {
         viewController.navigationItem.title = "New Color"
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    @IBAction func didClickDeleteButton(_ sender: UIButton) {
+        var colorsToDelete: [Color] = []
+        for cell in tableView.visibleCells {
+            guard let colorCell = cell as? ColorTableViewCell else { continue }
+            if colorCell.checkbox.isSelected {
+                let indexPath = tableView.indexPath(for: colorCell)!
+                let color = viewModel.colorsList[indexPath.row]
+                colorsToDelete.append(color)
+            }
+        }
+        viewModel.deleteColor(colors: colorsToDelete)
+        tableView.reloadData()
+    }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    //UITableViewDataSource functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.colorsList.count
     }
@@ -65,16 +79,17 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         //viewModel.moveCell(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     
+    //UITableViewDelegate functions
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        contentView.backgroundColor = viewModel.colorsList[indexPath.row].color
+        descriptionLabel.text = viewModel.colorsList[indexPath.row].desc
+    }
+    
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
     }
     
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        contentView.backgroundColor = viewModel.colorsList[indexPath.row].color
-        descriptionLabel.text = viewModel.colorsList[indexPath.row].desc
     }
 }

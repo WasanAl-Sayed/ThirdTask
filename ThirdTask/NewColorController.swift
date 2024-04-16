@@ -26,5 +26,8 @@ class NewColorController: UIViewController {
     }
     
     @IBAction func didClickAddButton(_ sender: UIButton) {
+        if titleTextField.text != nil && descriptionTextView.text != nil && colorSelector.selectedColor != nil {
+            viewModel.addColor(title: titleTextField.text ?? "", color: colorSelector.selectedColor ?? UIColor.black, description: descriptionTextView.text)
+        }
     }
 }
