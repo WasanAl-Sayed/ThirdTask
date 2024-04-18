@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol ColorTableViewCellDelegate: AnyObject {
+    //func checkboxStatus(_ status: Bool)
+    func didRequestDelete()
+}
+
 class ColorTableViewCell: UITableViewCell {
     
     static let identifier = "ColorTableViewCell"
     @IBOutlet weak var checkbox: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var titleLabelLeadingConstraint: NSLayoutConstraint!
+    weak var delegate: ColorTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,9 +32,8 @@ class ColorTableViewCell: UITableViewCell {
         return UINib(nibName: "ColorTableViewCell", bundle: nil)
     }
     
-    func setEditing(_ editing: Bool) {
-        checkbox.isHidden = !editing
-        titleLabelLeadingConstraint.constant = checkbox.isHidden ? 18 : 50
+    func setCheckboxVisibility(_ visibility: Bool) {
+        checkbox.isHidden = !visibility
     }
     
     @IBAction func didClickCheckbox(_ sender: UIButton) {

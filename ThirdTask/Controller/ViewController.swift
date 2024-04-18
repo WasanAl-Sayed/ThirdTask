@@ -15,10 +15,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var toolsView: UIView!
     private let viewModel = ColorViewModel()
+    var colorsToDelete: [ColorModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.getColors()
         tableView.register(ColorTableViewCell.nib(), forCellReuseIdentifier: ColorTableViewCell.identifier)
     }
     
@@ -27,30 +27,20 @@ class ViewController: UIViewController {
         tableView.isEditing = !isEditing
         editButton.title = isEditing ? "Edit" : "Done"
         toolsView.isHidden = isEditing ? true : false
-        tableView.visibleCells.forEach { cell in
-            if let colorCell = cell as? ColorTableViewCell {
-                colorCell.setEditing(!isEditing)
-            }
-        }
+        checkboxStatus(!isEditing)
+        tableView.reloadData()
     }
     
     @IBAction func didClickAddButton(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "newColorVC")
+        let viewController = storyboard.instantiateViewController(withIdentifier: "newColorVC") as! NewColorController
         viewController.navigationItem.title = "New Color"
+        viewController.delegate = self
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     @IBAction func didClickDeleteButton(_ sender: UIButton) {
-        var colorsToDelete: [Color] = []
-        for cell in tableView.visibleCells {
-            guard let colorCell = cell as? ColorTableViewCell else { continue }
-            if colorCell.checkbox.isSelected {
-                let indexPath = tableView.indexPath(for: colorCell)!
-                let color = viewModel.colorsList[indexPath.row]
-                colorsToDelete.append(color)
-            }
-        }
+        didRequestDelete()
         viewModel.deleteColor(colors: colorsToDelete)
         tableView.reloadData()
     }
@@ -59,16 +49,13 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     //UITableViewDataSource functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.colorsList.count
+        return viewModel.getAllColors().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ColorTableViewCell.identifier, for: indexPath) as! ColorTableViewCell
-        let color = viewModel.colorsList[indexPath.row].color
-        let name = viewModel.colorsList[indexPath.row].title
-        cell.backgroundColor = color
-        cell.titleLabel.text = name
-        return cell
+        cell.delegate = self
+        return viewModel.configureCell(cell: cell, indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -76,13 +63,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        //viewModel.moveCell(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        
     }
     
     //UITableViewDelegate functions
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        contentView.backgroundColor = viewModel.colorsList[indexPath.row].color
-        descriptionLabel.text = viewModel.colorsList[indexPath.row].desc
+        contentView.backgroundColor = viewModel.getAllColors()[indexPath.row].color
+        descriptionLabel.text = viewModel.getAllColors()[indexPath.row].desc
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -91,5 +78,32 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false
+    }
+}
+
+extension ViewController: ColorTableViewCellDelegate {
+    func checkboxStatus(_ status: Bool) {
+        for cell in tableView.visibleCells {
+            guard let colorCell = cell as? ColorTableViewCell else { continue }
+            colorCell.setCheckboxVisibility(status)
+        }
+    }
+    
+    func didRequestDelete() {
+        for cell in tableView.visibleCells {
+            guard let colorCell = cell as? ColorTableViewCell else { continue }
+            if colorCell.checkbox.isSelected {
+                if let indexPath = tableView.indexPath(for: colorCell) {
+                    let color = viewModel.getAllColors()[indexPath.row]
+                    colorsToDelete.append(color)
+                }
+            }
+        }
+    }
+}
+
+extension ViewController: NewColorControllerDelegate {
+    func didAddNewColor() {
+        tableView.reloadData()
     }
 }

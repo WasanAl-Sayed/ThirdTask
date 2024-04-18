@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol NewColorControllerDelegate: AnyObject {
+    func didAddNewColor()
+}
+
 class NewColorController: UIViewController {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var colorSelector: UIColorWell!
     private let viewModel = ColorViewModel()
+    weak var delegate: NewColorControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +32,9 @@ class NewColorController: UIViewController {
     
     @IBAction func didClickAddButton(_ sender: UIButton) {
         if titleTextField.text != nil && descriptionTextView.text != nil && colorSelector.selectedColor != nil {
-            viewModel.addColor(title: titleTextField.text ?? "", color: colorSelector.selectedColor ?? UIColor.black, description: descriptionTextView.text)
+            viewModel.addNewColor(title: titleTextField.text ?? "", color: colorSelector.selectedColor ?? UIColor.black, description: descriptionTextView.text)
+            delegate?.didAddNewColor()
         }
+        navigationController?.popToRootViewController(animated: true)
     }
 }
