@@ -24,11 +24,7 @@ class ColorViewModel {
         coreDataManager.deleteColor(colors: colors)
     }
     
-    func configureCell(cell: ColorTableViewCell, indexPath: IndexPath) -> ColorTableViewCell {
-        let color = self.getAllColors()[indexPath.row].color
-        let name = self.getAllColors()[indexPath.row].title
-        cell.backgroundColor = color
-        cell.titleLabel.text = name
-        return cell
+    func moveColor(from sourceIndex: Int, to destinationIndex: Int) {
+        coreDataManager.moveColor(from: sourceIndex, to: destinationIndex)
     }
 }

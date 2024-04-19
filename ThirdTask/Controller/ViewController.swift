@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var toolsView: UIView!
     private let viewModel = ColorViewModel()
-    var colorsToDelete: [ColorModel] = []
+    private let cellManager = CellManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,6 @@ class ViewController: UIViewController {
         tableView.isEditing = !isEditing
         editButton.title = isEditing ? "Edit" : "Done"
         toolsView.isHidden = isEditing ? true : false
-        checkboxStatus(!isEditing)
         tableView.reloadData()
     }
     
@@ -41,7 +40,6 @@ class ViewController: UIViewController {
     
     @IBAction func didClickDeleteButton(_ sender: UIButton) {
         didRequestDelete()
-        viewModel.deleteColor(colors: colorsToDelete)
         tableView.reloadData()
     }
 }
@@ -53,9 +51,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ColorTableViewCell.identifier, for: indexPath) as! ColorTableViewCell
-        cell.delegate = self
-        return viewModel.configureCell(cell: cell, indexPath: indexPath)
+        let cell = cellManager.configureCell(for: indexPath, in: tableView)
+        cell.setCheckboxVisibility(tableView.isEditing)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -63,7 +61,8 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
+        viewModel.moveColor(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        tableView.reloadData()
     }
     
     //UITableViewDelegate functions
@@ -82,23 +81,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension ViewController: ColorTableViewCellDelegate {
-    func checkboxStatus(_ status: Bool) {
-        for cell in tableView.visibleCells {
-            guard let colorCell = cell as? ColorTableViewCell else { continue }
-            colorCell.setCheckboxVisibility(status)
-        }
-    }
     
     func didRequestDelete() {
-        for cell in tableView.visibleCells {
-            guard let colorCell = cell as? ColorTableViewCell else { continue }
-            if colorCell.checkbox.isSelected {
-                if let indexPath = tableView.indexPath(for: colorCell) {
-                    let color = viewModel.getAllColors()[indexPath.row]
-                    colorsToDelete.append(color)
-                }
-            }
-        }
+        viewModel.deleteColor(colors: cellManager.deleteCell(tableView: tableView))
     }
 }
 

@@ -8,7 +8,6 @@
 import UIKit
 
 protocol ColorTableViewCellDelegate: AnyObject {
-    //func checkboxStatus(_ status: Bool)
     func didRequestDelete()
 }
 
@@ -18,6 +17,7 @@ class ColorTableViewCell: UITableViewCell {
     @IBOutlet weak var checkbox: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     weak var delegate: ColorTableViewCellDelegate?
+    var isSelectedFlag: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,8 +37,11 @@ class ColorTableViewCell: UITableViewCell {
     }
     
     @IBAction func didClickCheckbox(_ sender: UIButton) {
-        sender.setImage(UIImage(systemName: "circle"), for: .normal)
-        sender.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .selected)
-        sender.isSelected = !sender.isSelected
+        self.isSelectedFlag = !self.isSelectedFlag
+        if(self.isSelectedFlag == true) {
+            sender.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
+        } else {
+            sender.setImage(UIImage(systemName: "circle"), for: .normal)
+        }
     }
 }

@@ -28,6 +28,12 @@ class NewColorController: UIViewController {
         titleTextField.layer.borderColor = borderColor.cgColor
         titleTextField.layer.borderWidth = 0.7
         titleTextField.layer.cornerRadius = 25
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: titleTextField.frame.height))
+        paddingView.backgroundColor = .clear
+        titleTextField.leftView = paddingView
+        titleTextField.leftViewMode = .always
+        let padding = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        descriptionTextView.textContainerInset = padding
     }
     
     @IBAction func didClickAddButton(_ sender: UIButton) {

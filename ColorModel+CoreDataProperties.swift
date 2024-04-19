@@ -2,7 +2,7 @@
 //  ColorModel+CoreDataProperties.swift
 //  ThirdTask
 //
-//  Created by fts on 16/04/2024.
+//  Created by fts on 20/04/2024.
 //
 //
 
@@ -19,6 +19,7 @@ extension ColorModel {
     @NSManaged public var color: UIColor?
     @NSManaged public var desc: String?
     @NSManaged public var title: String?
+    @NSManaged public var index: Int16
 
 }
 

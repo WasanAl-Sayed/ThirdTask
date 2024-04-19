@@ -14,7 +14,7 @@ class CoreDataManager {
     func getColors() -> [ColorModel] {
         do {
             let colorsList = try context.fetch(ColorModel.fetchRequest())
-            return colorsList
+            return colorsList.sorted { $0.index < $1.index }
         } catch {
             print("Error fetching data: \(error)")
         }
@@ -22,12 +22,14 @@ class CoreDataManager {
     }
     
     func addColor(title: String, color: UIColor, description: String) {
-        let newColor = ColorModel(context: self.context)
+        let colors = getColors()
+        let newColor = ColorModel(context: context)
         newColor.title = title
         newColor.color = color
         newColor.desc = description
+        newColor.index = colors.isEmpty ? 0 : (colors.last?.index ?? 0) + 1
         do {
-            try self.context.save()
+            try context.save()
         } catch {
             print("Error saving data: \(error)")
         }
@@ -44,7 +46,18 @@ class CoreDataManager {
         }
     }
     
-    func moveCell(from sourceIndex: Int, to destinationIndex: Int) {
-        
+    func moveColor(from sourceIndex: Int, to destinationIndex: Int) {
+        let colors = getColors()
+        let movedItem = colors[sourceIndex]
+        var updatedColors = colors.filter { $0 != movedItem }
+        updatedColors.insert(movedItem, at: destinationIndex)
+        for (index, color) in updatedColors.enumerated() {
+            color.index = Int16(index)
+        }
+        do {
+            try context.save()
+        } catch {
+            print("Error moving color: \(error)")
+        }
     }
 }
