@@ -7,16 +7,12 @@
 
 import UIKit
 
-protocol ColorTableViewCellDelegate: AnyObject {
-    func didRequestDelete()
-}
-
 class ColorTableViewCell: UITableViewCell {
-    
-    static let identifier = "ColorTableViewCell"
     @IBOutlet weak var checkbox: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
-    weak var delegate: ColorTableViewCellDelegate?
+
+    static let identifier = "ColorTableViewCell"
+
     var isSelectedFlag: Bool = false
     
     override func awakeFromNib() {
@@ -37,11 +33,9 @@ class ColorTableViewCell: UITableViewCell {
     }
     
     @IBAction func didClickCheckbox(_ sender: UIButton) {
-        self.isSelectedFlag = !self.isSelectedFlag
-        if(self.isSelectedFlag == true) {
-            sender.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
-        } else {
-            sender.setImage(UIImage(systemName: "circle"), for: .normal)
-        }
+        isSelectedFlag.toggle()
+
+        let imageName = isSelectedFlag ? "checkmark.circle.fill" : "circle"
+        sender.setImage(UIImage(systemName: imageName), for: .normal)
     }
 }

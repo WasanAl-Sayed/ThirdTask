@@ -11,7 +11,6 @@ class ColorTransformer: NSSecureUnarchiveFromDataTransformer {
     override class var allowedTopLevelClasses: [AnyClass] {
         return [UIColor.self]
     }
-    
     static func register() {
         let transformer = ColorTransformer()
         ValueTransformer.setValueTransformer(transformer, forName: NSValueTransformerName(rawValue: "ColorTransformer"))

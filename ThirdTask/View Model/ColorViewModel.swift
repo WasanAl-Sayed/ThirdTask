@@ -11,13 +11,10 @@ import CoreData
 class ColorViewModel {
     
     let coreDataManager = CoreDataManager()
+    var cells: [ColorTableViewCell] = []
     
     func getAllColors() -> [ColorModel] {
         return coreDataManager.getColors()
-    }
-    
-    func addNewColor(title: String, color: UIColor, description: String) {
-        coreDataManager.addColor(title: title, color: color, description: description)
     }
     
     func deleteColor(colors: [ColorModel]) {
