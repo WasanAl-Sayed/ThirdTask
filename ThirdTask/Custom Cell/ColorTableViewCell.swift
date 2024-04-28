@@ -30,15 +30,20 @@ class ColorTableViewCell: UITableViewCell {
     
     @IBAction func didClickCheckbox(_ sender: UIButton) {
         isSelectedFlag.toggle()
-
         let imageName = isSelectedFlag ? "checkmark.circle.fill" : "circle"
         sender.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
-    func configureCell(title: String, color: UIColor, isEditing: Bool) {
+    func configureCell(title: String, color: UIColor, isEditing: Bool, isSelected: Bool) {
         backgroundColor = color
         titleLabel.text = title
-        isSelectedFlag = false
         setCheckboxVisibility(isEditing)
+        updateSelection(isSelected)
+    }
+    
+    private func updateSelection(_ isSelected: Bool) {
+        isSelectedFlag = isSelected
+        let imageName = isSelected ? "checkmark.circle.fill" : "circle"
+        checkbox.setImage(UIImage(systemName: imageName), for: .normal)
     }
 }

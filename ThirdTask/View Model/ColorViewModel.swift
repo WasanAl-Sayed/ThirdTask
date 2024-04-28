@@ -11,6 +11,7 @@ import CoreData
 class ColorViewModel {
     
     private (set) var cells: [ColorTableViewCell] = []
+    private var selectedIndexes: Set<Int> = []
     
     func setCell(_ cell: ColorTableViewCell, at index: Int) {
         cells[index] = cell
@@ -31,6 +32,8 @@ class ColorViewModel {
     func deleteColor(tableView: UITableView) {
         var colorsToDelete: [ColorModel] = []
         let allColors: [ColorModel] = getAllColors()
+        selectedIndexes.removeAll()
+        
         for cell in cells where cell.isSelectedFlag {
             if let indexPath = tableView.indexPath(for: cell) {
                 let color = allColors[indexPath.row]
@@ -42,5 +45,9 @@ class ColorViewModel {
     
     func moveColor(from sourceIndex: Int, to destinationIndex: Int) {
         CoreDataManager.shared.moveColor(from: sourceIndex, to: destinationIndex)
+    }
+        
+    func isSelected(at index: Int) -> Bool {
+        return selectedIndexes.contains(index)
     }
 }

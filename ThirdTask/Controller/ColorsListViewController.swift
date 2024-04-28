@@ -67,7 +67,8 @@ extension ColorsListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configureCell(
             title: color.title ?? "",
             color: color.color ?? UIColor.black,
-            isEditing: tableView.isEditing
+            isEditing: tableView.isEditing,
+            isSelected: viewModel.isSelected(at: indexPath.row)
         )
         viewModel.setCell(cell, at: indexPath.row)
         return cell
