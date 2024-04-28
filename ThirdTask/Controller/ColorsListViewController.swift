@@ -19,6 +19,7 @@ class ColorsListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.updateCells()
         tableView.register(ColorTableViewCell.nib(), forCellReuseIdentifier: ColorTableViewCell.identifier)
     }
     
@@ -41,20 +42,13 @@ class ColorsListViewController: UIViewController {
     }
     
     @IBAction func didClickDeleteButton(_ sender: UIButton) {
-        var colorsToDelete: [ColorModel] = []
-        for cell in viewModel.cells where cell.isSelectedFlag {
-            if let indexPath = tableView.indexPath(for: cell) {
-                let color = viewModel.getAllColors()[indexPath.row]
-                colorsToDelete.append(color)
-            }
-        }
-        viewModel.deleteColor(colors: colorsToDelete)
-        colorsToDelete.removeAll()
+        viewModel.deleteColor(tableView: tableView)
         tableView.reloadData()
     }
 }
 
 extension ColorsListViewController: UITableViewDataSource, UITableViewDelegate {
+    
     // UITableViewDataSource functions
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,11 +63,13 @@ extension ColorsListViewController: UITableViewDataSource, UITableViewDelegate {
             withIdentifier: ColorTableViewCell.identifier,
             for: indexPath
         ) as! ColorTableViewCell
-        cell.backgroundColor = viewModel.getAllColors()[indexPath.row].color
-        cell.titleLabel.text = viewModel.getAllColors()[indexPath.row].title
-        cell.isSelectedFlag = false
-        viewModel.cells.append(cell)
-        cell.setCheckboxVisibility(tableView.isEditing)
+        let color = viewModel.getAllColors()[indexPath.row]
+        cell.configureCell(
+            title: color.title ?? "",
+            color: color.color ?? UIColor.black,
+            isEditing: tableView.isEditing
+        )
+        viewModel.setCell(cell, at: indexPath.row)
         return cell
     }
     
@@ -120,6 +116,7 @@ extension ColorsListViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension ColorsListViewController: NewColorControllerDelegate {
     func didAddNewColor() {
+        viewModel.updateCells()
         tableView.reloadData()
     }
 }

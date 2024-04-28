@@ -19,10 +19,6 @@ class ColorTableViewCell: UITableViewCell {
         super.awakeFromNib()
         selectionStyle = .none
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     static func nib() -> UINib {
         return UINib(nibName: "ColorTableViewCell", bundle: nil)
@@ -37,5 +33,12 @@ class ColorTableViewCell: UITableViewCell {
 
         let imageName = isSelectedFlag ? "checkmark.circle.fill" : "circle"
         sender.setImage(UIImage(systemName: imageName), for: .normal)
+    }
+    
+    func configureCell(title: String, color: UIColor, isEditing: Bool) {
+        backgroundColor = color
+        titleLabel.text = title
+        isSelectedFlag = false
+        setCheckboxVisibility(isEditing)
     }
 }

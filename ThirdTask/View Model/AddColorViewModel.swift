@@ -7,9 +7,8 @@
 
 import UIKit
 
-class AddColorViewModel {
-    let coreDataManager = CoreDataManager()
+class AddColorViewModel: ColorViewModel {
     func addNewColor(title: String, color: UIColor, description: String) {
-        coreDataManager.addColor(title: title, color: color, description: description)
+        CoreDataManager.shared.addColor(title: title, color: color, description: description)
     }
 }

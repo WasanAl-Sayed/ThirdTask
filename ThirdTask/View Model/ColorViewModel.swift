@@ -10,18 +10,37 @@ import CoreData
 
 class ColorViewModel {
     
-    let coreDataManager = CoreDataManager()
-    var cells: [ColorTableViewCell] = []
+    private (set) var cells: [ColorTableViewCell] = []
     
-    func getAllColors() -> [ColorModel] {
-        return coreDataManager.getColors()
+    func setCell(_ cell: ColorTableViewCell, at index: Int) {
+        cells[index] = cell
     }
     
-    func deleteColor(colors: [ColorModel]) {
-        coreDataManager.deleteColor(colors: colors)
+    func updateCells() {
+        let colors = getAllColors()
+        cells.removeAll()
+        for _ in colors {
+            cells.append(ColorTableViewCell())
+        }
+    }
+    
+    func getAllColors() -> [ColorModel] {
+        return CoreDataManager.shared.getColors()
+    }
+    
+    func deleteColor(tableView: UITableView) {
+        var colorsToDelete: [ColorModel] = []
+        let allColors: [ColorModel] = getAllColors()
+        for cell in cells where cell.isSelectedFlag {
+            if let indexPath = tableView.indexPath(for: cell) {
+                let color = allColors[indexPath.row]
+                colorsToDelete.append(color)
+            }
+        }
+        CoreDataManager.shared.deleteColor(colors: colorsToDelete)
     }
     
     func moveColor(from sourceIndex: Int, to destinationIndex: Int) {
-        coreDataManager.moveColor(from: sourceIndex, to: destinationIndex)
+        CoreDataManager.shared.moveColor(from: sourceIndex, to: destinationIndex)
     }
 }

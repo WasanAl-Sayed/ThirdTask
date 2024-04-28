@@ -9,6 +9,11 @@ import UIKit
 import CoreData
 
 class CoreDataManager {
+    
+    static let shared = CoreDataManager()
+    
+    private init() {}
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func getColors() -> [ColorModel] {
