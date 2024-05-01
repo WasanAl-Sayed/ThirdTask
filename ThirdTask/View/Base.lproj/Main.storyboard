@@ -56,6 +56,14 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="cIN-Li-NZX"/>
                                 </connections>
                             </tableView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8x-gw-acq">
+                                <rect key="frame" x="23.333333333333343" y="390.33333333333331" width="346.66666666666663" height="71.666666666666686"/>
+                                <string key="text">There is no colors added.
+ Add colors</string>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9bq-R1-IXp">
                                 <rect key="frame" x="0.0" y="464.66666666666674" width="393" height="387.33333333333326"/>
                                 <subviews>
@@ -126,6 +134,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="2XL-sG-1Jb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2eQ-71-nXT"/>
+                            <constraint firstItem="c8x-gw-acq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="63w-ns-X5J"/>
+                            <constraint firstItem="c8x-gw-acq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8Ma-6a-GJj"/>
                             <constraint firstItem="9bq-R1-IXp" firstAttribute="top" secondItem="2XL-sG-1Jb" secondAttribute="bottom" id="Bfz-qA-Z84"/>
                             <constraint firstAttribute="bottom" secondItem="9bq-R1-IXp" secondAttribute="bottom" id="DbM-nF-AiP"/>
                             <constraint firstItem="Raf-jf-6GI" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="DiR-CI-sAv"/>
@@ -187,6 +197,7 @@
                         <outlet property="contentView" destination="9bq-R1-IXp" id="fBU-VA-oC8"/>
                         <outlet property="descriptionLabel" destination="mnT-qA-e7m" id="ejG-DF-Iei"/>
                         <outlet property="editButton" destination="uZd-5d-GKe" id="AG3-hS-xYX"/>
+                        <outlet property="noColorsLabel" destination="c8x-gw-acq" id="B4b-5r-iZm"/>
                         <outlet property="tableView" destination="2XL-sG-1Jb" id="pxh-MH-DG2"/>
                         <outlet property="toolsView" destination="QWK-a5-3Cx" id="9vA-BY-RmB"/>
                     </connections>

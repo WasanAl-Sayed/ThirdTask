@@ -1,5 +1,5 @@
 //
-//  NewColorController.swift
+//  AddColorViewController.swift
 //  ThirdTask
 //
 //  Created by fts on 12/04/2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol NewColorControllerDelegate: AnyObject {
+protocol AddColorViewControllerDelegate: AnyObject {
     func didAddNewColor()
 }
 
@@ -18,7 +18,7 @@ class AddColorViewController: UIViewController {
     @IBOutlet weak var colorSelector: UIColorWell!
     
     private let addColorViewModel = AddColorViewModel()
-    weak var delegate: NewColorControllerDelegate?
+    weak var delegate: AddColorViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +35,7 @@ class AddColorViewController: UIViewController {
         descriptionTextView.layer.borderColor = borderColor.cgColor
         descriptionTextView.layer.borderWidth = 0.7
         descriptionTextView.layer.cornerRadius = 25
-        let padding = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        let padding = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         descriptionTextView.textContainerInset = padding
     }
     

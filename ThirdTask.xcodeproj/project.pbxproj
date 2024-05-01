@@ -19,6 +19,7 @@
 		2F976C762BCEA712009FE1C5 /* CoreDataManager .swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F976C752BCEA712009FE1C5 /* CoreDataManager .swift */; };
 		2F9B37322BCB2FFC00D9A35E /* ColorModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B37302BCB2FFC00D9A35E /* ColorModel.xcdatamodeld */; };
 		2F9B37622BCB41AF00D9A35E /* ColorTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B37612BCB41AF00D9A35E /* ColorTransformer.swift */; };
+		2F9C7B022BE256FA0099F79C /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9C7B012BE256FA0099F79C /* CellModel.swift */; };
 		2FBC03F12BBE8BFE00CF0A10 /* ColorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBC03F02BBE8BFE00CF0A10 /* ColorViewModel.swift */; };
 		2FECAF5B2BC9A09100E14AB3 /* AddColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FECAF5A2BC9A09000E14AB3 /* AddColorViewController.swift */; };
 		2FECAF5E2BC9C0F500E14AB3 /* ColorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FECAF5C2BC9C0F500E14AB3 /* ColorTableViewCell.swift */; };
@@ -40,6 +41,7 @@
 		2F976C752BCEA712009FE1C5 /* CoreDataManager .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreDataManager .swift"; sourceTree = "<group>"; };
 		2F9B37312BCB2FFC00D9A35E /* ColorModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ColorModel.xcdatamodel; sourceTree = "<group>"; };
 		2F9B37612BCB41AF00D9A35E /* ColorTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTransformer.swift; sourceTree = "<group>"; };
+		2F9C7B012BE256FA0099F79C /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
 		2FBC03F02BBE8BFE00CF0A10 /* ColorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewModel.swift; sourceTree = "<group>"; };
 		2FECAF5A2BC9A09000E14AB3 /* AddColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddColorViewController.swift; sourceTree = "<group>"; };
 		2FECAF5C2BC9C0F500E14AB3 /* ColorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTableViewCell.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				2FECAF5C2BC9C0F500E14AB3 /* ColorTableViewCell.swift */,
 				2FECAF5D2BC9C0F500E14AB3 /* ColorTableViewCell.xib */,
+				2F9C7B012BE256FA0099F79C /* CellModel.swift */,
 			);
 			path = "Custom Cell";
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				2F8D53FA2BD3178B005162EE /* ColorModel+CoreDataClass.swift in Sources */,
 				2FECAF5E2BC9C0F500E14AB3 /* ColorTableViewCell.swift in Sources */,
 				2F8D53FB2BD3178B005162EE /* ColorModel+CoreDataProperties.swift in Sources */,
+				2F9C7B022BE256FA0099F79C /* CellModel.swift in Sources */,
 				2F3052712BAC484200452398 /* SceneDelegate.swift in Sources */,
 				2F976C762BCEA712009FE1C5 /* CoreDataManager .swift in Sources */,
 			);

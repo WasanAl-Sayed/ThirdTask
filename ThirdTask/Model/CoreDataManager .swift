@@ -1,5 +1,5 @@
 //
-//  CoreDataManager .swift
+//  CoreDataManager.swift
 //  ThirdTask
 //
 //  Created by fts on 16/04/2024.
@@ -40,7 +40,7 @@ class CoreDataManager {
         }
     }
     
-    func deleteColor(colors: [ColorModel]) {
+    func deleteColors(colors: [ColorModel]) {
         for color in colors {
             context.delete(color)
         }
