@@ -57,8 +57,8 @@
                                 </connections>
                             </tableView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8x-gw-acq">
-                                <rect key="frame" x="23.333333333333343" y="390.33333333333331" width="346.66666666666663" height="71.666666666666686"/>
-                                <string key="text">There is no colors added.
+                                <rect key="frame" x="12.666666666666657" y="390.33333333333331" width="367.66666666666674" height="71.666666666666686"/>
+                                <string key="text">There are no colors added.
  Add colors</string>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <nil key="textColor"/>
@@ -82,7 +82,7 @@
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QWK-a5-3Cx">
                                         <rect key="frame" x="0.0" y="307.33333333333331" width="393" height="80"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cf3-o2-H8n">
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cf3-o2-H8n">
                                                 <rect key="frame" x="10" y="10" width="48" height="35"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain">
@@ -195,6 +195,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="contentView" destination="9bq-R1-IXp" id="fBU-VA-oC8"/>
+                        <outlet property="deleteButton" destination="Cf3-o2-H8n" id="Klv-OQ-1UE"/>
                         <outlet property="descriptionLabel" destination="mnT-qA-e7m" id="ejG-DF-Iei"/>
                         <outlet property="editButton" destination="uZd-5d-GKe" id="AG3-hS-xYX"/>
                         <outlet property="noColorsLabel" destination="c8x-gw-acq" id="B4b-5r-iZm"/>

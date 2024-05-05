@@ -14,13 +14,12 @@ class ColorViewModel {
     func updateCells() {
         let colors = getAllColors()
         cells.removeAll()
-        for color in colors {
-            let cellModel = CellModel(
+        cells = colors.map { color in
+            return CellModel(
                 colorModel: color,
                 isEditing: false,
                 isSelected: false
             )
-            cells.append(cellModel)
         }
     }
         
@@ -29,12 +28,7 @@ class ColorViewModel {
     }
         
     func deleteColors() {
-        var colorsToDelete: [ColorModel] = []
-                
-        for (_, cell) in cells.enumerated() where cell.isSelected {
-            let color = cell.colorModel
-            colorsToDelete.append(color)
-        }
+        let colorsToDelete: [ColorModel] = cells.compactMap {$0.isSelected ? $0.colorModel : nil}
         CoreDataManager.shared.deleteColors(colors: colorsToDelete)
         updateCells()
     }
@@ -45,5 +39,25 @@ class ColorViewModel {
             
     func setSelected(_ isSelected: Bool, at index: Int) {
         cells[index].isSelected = isSelected
+    }
+    
+    func isAnyCellSelected() -> Bool {
+        return cells.contains(where: { $0.isSelected })
+    }
+    
+    func updateContentView(selectedColor: ColorModel?, completion: @escaping (UIColor?, String?) -> Void) {
+        guard let selectedColor = selectedColor else {
+            completion(UIColor.white, " ")
+            return
+        }
+        if !getAllColors().contains(where: { $0 == selectedColor }) {
+            if let firstColor = getAllColors().first {
+                completion(firstColor.color, firstColor.desc)
+            } else {
+                completion(UIColor.white, " ")
+            }
+        } else {
+            completion(selectedColor.color, selectedColor.desc)
+        }
     }
 }

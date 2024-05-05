@@ -31,7 +31,7 @@ class AddColorViewController: UIViewController {
     }
     
     func configureDescriptionTextView() {
-        let borderColor: UIColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+        let borderColor: UIColor = UIColor(named: "border") ?? UIColor.black
         descriptionTextView.layer.borderColor = borderColor.cgColor
         descriptionTextView.layer.borderWidth = 0.7
         descriptionTextView.layer.cornerRadius = 25
@@ -40,7 +40,7 @@ class AddColorViewController: UIViewController {
     }
     
     func configureTitleTextField() {
-        let borderColor: UIColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
+        let borderColor: UIColor = UIColor(named: "border") ?? UIColor.black
         titleTextField.layer.borderColor = borderColor.cgColor
         titleTextField.layer.borderWidth = 0.7
         titleTextField.layer.cornerRadius = 25

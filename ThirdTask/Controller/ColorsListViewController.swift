@@ -15,8 +15,10 @@ class ColorsListViewController: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var toolsView: UIView!
     @IBOutlet weak var noColorsLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
     
     private let viewModel = ColorViewModel()
+    private var selectedColor: ColorModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,16 +26,7 @@ class ColorsListViewController: UIViewController {
         tableView.register(ColorTableViewCell.nib(), forCellReuseIdentifier: ColorTableViewCell.identifier)
         tableView.allowsSelectionDuringEditing = true
         updateNoColorsLabelVisibility()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        guard tableView.numberOfRows(inSection: 0) > 0 else {
-            return
-        }
-        let firstIndexPath = IndexPath(row: 0, section: 0)
-        tableView.selectRow(at: firstIndexPath, animated: false, scrollPosition: .none)
-        tableView(tableView, didSelectRowAt: firstIndexPath)
+        selectFirstColorByDefault()
     }
     
     @IBAction func didClickEditButton(_ sender: UIBarButtonItem) {
@@ -56,6 +49,11 @@ class ColorsListViewController: UIViewController {
         viewModel.deleteColors()
         tableView.reloadData()
         updateNoColorsLabelVisibility()
+        updateDeleteButtonState()
+        viewModel.updateContentView(selectedColor: selectedColor) { color, description in
+            self.contentView.backgroundColor = color
+            self.descriptionLabel.text = description
+        }
     }
     
     private func updateNoColorsLabelVisibility() {
@@ -72,10 +70,25 @@ class ColorsListViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(
             withIdentifier: "newColorVC"
-        ) as! AddColorViewController
-        viewController.navigationItem.title = "New Color"
-        viewController.delegate = self
-        navigationController?.pushViewController(viewController, animated: true)
+        ) as? AddColorViewController
+        viewController?.navigationItem.title = "New Color"
+        viewController?.delegate = self
+        navigationController?.pushViewController(viewController ?? AddColorViewController(), animated: true)
+    }
+    
+    private func updateDeleteButtonState() {
+        let isAnyCellSelected = viewModel.isAnyCellSelected()
+        deleteButton.isEnabled = isAnyCellSelected
+    }
+    
+    func selectFirstColorByDefault() {
+        if let firstColor = viewModel.getAllColors().first {
+            selectedColor = firstColor
+            viewModel.updateContentView(selectedColor: selectedColor) { color, description in
+                self.contentView.backgroundColor = color
+                self.descriptionLabel.text = description
+            }
+        }
     }
 }
 
@@ -94,16 +107,16 @@ extension ColorsListViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: ColorTableViewCell.identifier,
             for: indexPath
-        ) as! ColorTableViewCell
+        ) as? ColorTableViewCell
         let color = viewModel.getAllColors()[indexPath.row]
         let cellModel = CellModel(
             colorModel: color,
             isEditing: tableView.isEditing,
             isSelected: false
         )
-        cell.configureCell(cellModel: cellModel)
-        cell.delegate = self
-        return cell
+        cell?.configureCell(cellModel: cellModel)
+        cell?.delegate = self
+        return cell ?? ColorTableViewCell()
     }
     
     func tableView(
@@ -129,8 +142,11 @@ extension ColorsListViewController: UITableViewDataSource, UITableViewDelegate {
         didSelectRowAt indexPath: IndexPath
     ) {
         let selectedCellModel = viewModel.cells[indexPath.row]
-        contentView.backgroundColor = selectedCellModel.colorModel.color
-        descriptionLabel.text = selectedCellModel.colorModel.desc
+        selectedColor = selectedCellModel.colorModel
+        viewModel.updateContentView(selectedColor: selectedColor) { color, description in
+            self.contentView.backgroundColor = color
+            self.descriptionLabel.text = description
+        }
     }
     
     func tableView(
@@ -156,6 +172,14 @@ extension ColorsListViewController: AddColorViewControllerDelegate {
         toolsView.isHidden = true
         noColorsLabel.isHidden = true
         tableView.reloadData()
+        
+        if viewModel.getAllColors().count == 1 {
+            let newColor = viewModel.getAllColors().first
+            viewModel.updateContentView(selectedColor: selectedColor) { color, description in
+                self.contentView.backgroundColor = color
+                self.descriptionLabel.text = description
+            }
+        }
     }
 }
 
@@ -163,5 +187,6 @@ extension ColorsListViewController: ColorTableViewCellDelegate {
     func checkboxToggled(isSelected: Bool, forCell cell: ColorTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         viewModel.setSelected(isSelected, at: indexPath.row)
+        updateDeleteButtonState()
     }
 }
