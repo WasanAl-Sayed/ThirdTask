@@ -11,10 +11,9 @@ import CoreData
 class CoreDataManager {
     
     static let shared = CoreDataManager()
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private init() {}
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func getColors() -> [ColorModel] {
         do {
@@ -26,7 +25,11 @@ class CoreDataManager {
         return []
     }
     
-    func addColor(title: String, color: UIColor, description: String) {
+    func addColor(
+        title: String,
+        color: UIColor,
+        description: String
+    ) {
         let colors = getColors()
         let newColor = ColorModel(context: context)
         newColor.title = title
@@ -51,7 +54,10 @@ class CoreDataManager {
         }
     }
     
-    func moveColor(from sourceIndex: Int, to destinationIndex: Int) {
+    func moveColor(
+        from sourceIndex: Int,
+        to destinationIndex: Int
+    ) {
         let colors = getColors()
         let movedItem = colors[sourceIndex]
         var updatedColors = colors.filter { $0 != movedItem }

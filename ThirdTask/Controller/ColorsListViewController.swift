@@ -19,45 +19,23 @@ class ColorsListViewController: UIViewController {
     
     private let viewModel = ColorViewModel()
     private var selectedColor: ColorModel?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.updateCells()
-        tableView.register(ColorTableViewCell.nib(), forCellReuseIdentifier: ColorTableViewCell.identifier)
-        tableView.allowsSelectionDuringEditing = true
+        viewModel.getAllColors()
+        configureTableView()
         updateNoColorsLabelVisibility()
         selectFirstColorByDefault()
     }
     
-    @IBAction func didClickEditButton(_ sender: UIBarButtonItem) {
-        if editButton.title == "Add" {
-            openAddNewColorPage()
-        } else {
-            let isEditing = tableView.isEditing
-            tableView.isEditing = !isEditing
-            editButton.title = isEditing ? "Edit" : "Done"
-            toolsView.isHidden = isEditing ? true : false
-            tableView.reloadData()
-        }
-    }
-    
-    @IBAction func didClickAddButton(_ sender: UIButton) {
-        openAddNewColorPage()
-    }
-    
-    @IBAction func didClickDeleteButton(_ sender: UIButton) {
-        viewModel.deleteColors()
-        tableView.reloadData()
-        updateNoColorsLabelVisibility()
-        updateDeleteButtonState()
-        viewModel.updateContentView(selectedColor: selectedColor) { color, description in
-            self.contentView.backgroundColor = color
-            self.descriptionLabel.text = description
-        }
+    private func configureTableView() {
+        tableView.register(ColorTableViewCell.nib(), forCellReuseIdentifier: ColorTableViewCell.identifier)
+        tableView.allowsSelectionDuringEditing = true
     }
     
     private func updateNoColorsLabelVisibility() {
-        if viewModel.getAllColors().isEmpty {
+        if viewModel.colors.isEmpty {
             noColorsLabel.isHidden = false
             editButton.title = "Add"
             contentView.backgroundColor = UIColor.white
@@ -66,7 +44,21 @@ class ColorsListViewController: UIViewController {
         }
     }
     
-    func openAddNewColorPage() {
+    private func selectFirstColorByDefault() {
+        if let firstColor = viewModel.colors.first {
+            selectedColor = firstColor
+            viewModel.updateContentView(selectedColor: selectedColor) { color, description in
+                self.contentView.backgroundColor = color
+                self.descriptionLabel.text = description
+            }
+        }
+    }
+    
+    private func updateDeleteButtonState() {
+        deleteButton.isEnabled = viewModel.isAnyCellSelected()
+    }
+    
+    private func openAddNewColorPage() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(
             withIdentifier: "newColorVC"
@@ -76,18 +68,33 @@ class ColorsListViewController: UIViewController {
         navigationController?.pushViewController(viewController ?? AddColorViewController(), animated: true)
     }
     
-    private func updateDeleteButtonState() {
-        let isAnyCellSelected = viewModel.isAnyCellSelected()
-        deleteButton.isEnabled = isAnyCellSelected
+    private func configureRightBarButton(bool: Bool) {
+        tableView.isEditing = !bool
+        editButton.title = bool ? "Edit" : "Done"
+        toolsView.isHidden = bool
+        tableView.reloadData()
     }
     
-    func selectFirstColorByDefault() {
-        if let firstColor = viewModel.getAllColors().first {
-            selectedColor = firstColor
-            viewModel.updateContentView(selectedColor: selectedColor) { color, description in
-                self.contentView.backgroundColor = color
-                self.descriptionLabel.text = description
-            }
+    @IBAction func didPressRightBarButton(_ sender: UIBarButtonItem) {
+        if editButton.title == "Add" {
+            openAddNewColorPage()
+        } else {
+            configureRightBarButton(bool: tableView.isEditing)
+        }
+    }
+    
+    @IBAction func didPressAddButton(_ sender: UIButton) {
+        openAddNewColorPage()
+    }
+    
+    @IBAction func didPressDeleteButton(_ sender: UIButton) {
+        viewModel.deleteColors()
+        tableView.reloadData()
+        updateNoColorsLabelVisibility()
+        updateDeleteButtonState()
+        viewModel.updateContentView(selectedColor: selectedColor) { color, description in
+            self.contentView.backgroundColor = color
+            self.descriptionLabel.text = description
         }
     }
 }
@@ -96,8 +103,11 @@ extension ColorsListViewController: UITableViewDataSource, UITableViewDelegate {
     
     // UITableViewDataSource functions
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.getAllColors().count
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
+        return viewModel.colors.count
     }
     
     func tableView(
@@ -108,13 +118,13 @@ extension ColorsListViewController: UITableViewDataSource, UITableViewDelegate {
             withIdentifier: ColorTableViewCell.identifier,
             for: indexPath
         ) as? ColorTableViewCell
-        let color = viewModel.getAllColors()[indexPath.row]
+        let color = viewModel.colors[indexPath.row]
         let cellModel = CellModel(
             colorModel: color,
             isEditing: tableView.isEditing,
             isSelected: false
         )
-        cell?.configureCell(cellModel: cellModel)
+        cell?.configureCell(cellModel: cellModel, index: indexPath.row)
         cell?.delegate = self
         return cell ?? ColorTableViewCell()
     }
@@ -167,15 +177,12 @@ extension ColorsListViewController: UITableViewDataSource, UITableViewDelegate {
 extension ColorsListViewController: AddColorViewControllerDelegate {
     func didAddNewColor() {
         viewModel.updateCells()
-        tableView.isEditing = false
-        editButton.title = "Edit"
-        toolsView.isHidden = true
         noColorsLabel.isHidden = true
-        tableView.reloadData()
+        configureRightBarButton(bool: true)
         
-        if viewModel.getAllColors().count == 1 {
-            let newColor = viewModel.getAllColors().first
-            viewModel.updateContentView(selectedColor: selectedColor) { color, description in
+        if viewModel.colors.count == 1 {
+            let newColor = viewModel.colors.first
+            viewModel.updateContentView(selectedColor: newColor) { color, description in
                 self.contentView.backgroundColor = color
                 self.descriptionLabel.text = description
             }
@@ -184,9 +191,8 @@ extension ColorsListViewController: AddColorViewControllerDelegate {
 }
 
 extension ColorsListViewController: ColorTableViewCellDelegate {
-    func checkboxToggled(isSelected: Bool, forCell cell: ColorTableViewCell) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
-        viewModel.setSelected(isSelected, at: indexPath.row)
+    func checkboxToggled(isSelected: Bool, forIndex index: Int) {
+        viewModel.setSelected(isSelected, at: index)
         updateDeleteButtonState()
     }
 }

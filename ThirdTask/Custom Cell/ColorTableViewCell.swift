@@ -8,16 +8,15 @@
 import UIKit
 
 protocol ColorTableViewCellDelegate: AnyObject {
-    func checkboxToggled(isSelected: Bool, forCell cell: ColorTableViewCell)
+    func checkboxToggled(isSelected: Bool, forIndex index: Int)
 }
 
 class ColorTableViewCell: UITableViewCell {
     @IBOutlet weak var checkbox: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
-    private var myReorderImage: UIImage? = nil
-
+    
     static let identifier = "ColorTableViewCell"
-
+    private var index: Int = 0
     var isSelectedFlag: Bool = false
     weak var delegate: ColorTableViewCellDelegate?
     
@@ -30,27 +29,28 @@ class ColorTableViewCell: UITableViewCell {
         return UINib(nibName: "ColorTableViewCell", bundle: nil)
     }
     
+    private func updateSelection(cellModel: CellModel) {
+        isSelectedFlag = cellModel.isSelected
+        let imageName = cellModel.isSelected ? "checkmark.circle.fill" : "circle"
+        checkbox.setImage(UIImage(systemName: imageName), for: .normal)
+    }
+    
     func setCheckboxVisibility(_ visibility: Bool) {
         checkbox.isHidden = !visibility
+    }
+    
+    func configureCell(cellModel: CellModel, index: Int) {
+        backgroundColor = cellModel.colorModel.color
+        titleLabel.text = cellModel.colorModel.title
+        setCheckboxVisibility(cellModel.isEditing)
+        updateSelection(cellModel: cellModel)
+        self.index = index
     }
     
     @IBAction func didClickCheckbox(_ sender: UIButton) {
         isSelectedFlag.toggle()
         let imageName = isSelectedFlag ? "checkmark.circle.fill" : "circle"
         sender.setImage(UIImage(systemName: imageName), for: .normal)
-        delegate?.checkboxToggled(isSelected: isSelectedFlag, forCell: self)
-    }
-    
-    func configureCell(cellModel: CellModel) {
-        backgroundColor = cellModel.colorModel.color
-        titleLabel.text = cellModel.colorModel.title
-        setCheckboxVisibility(cellModel.isEditing)
-        updateSelection(cellModel: cellModel)
-    }
-    
-    private func updateSelection(cellModel: CellModel) {
-        isSelectedFlag = cellModel.isSelected
-        let imageName = cellModel.isSelected ? "checkmark.circle.fill" : "circle"
-        checkbox.setImage(UIImage(systemName: imageName), for: .normal)
+        delegate?.checkboxToggled(isSelected: isSelectedFlag, forIndex: index)
     }
 }

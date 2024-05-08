@@ -10,9 +10,10 @@ import UIKit
 class ColorViewModel {
     
     private (set) var cells: [CellModel] = []
+    var colors: [ColorModel] = []
         
     func updateCells() {
-        let colors = getAllColors()
+        getAllColors()
         cells.removeAll()
         cells = colors.map { color in
             return CellModel(
@@ -23,21 +24,29 @@ class ColorViewModel {
         }
     }
         
-    func getAllColors() -> [ColorModel] {
-        return CoreDataManager.shared.getColors()
+    func getAllColors() {
+        colors.removeAll()
+        colors = CoreDataManager.shared.getColors()
     }
         
     func deleteColors() {
-        let colorsToDelete: [ColorModel] = cells.compactMap {$0.isSelected ? $0.colorModel : nil}
+        let colorsToDelete: [ColorModel] = cells.compactMap {
+            $0.isSelected ? $0.colorModel : nil
+        }
         CoreDataManager.shared.deleteColors(colors: colorsToDelete)
         updateCells()
+        getAllColors()
     }
         
     func moveColor(from sourceIndex: Int, to destinationIndex: Int) {
         CoreDataManager.shared.moveColor(from: sourceIndex, to: destinationIndex)
+        updateCells()
+        getAllColors()
     }
             
     func setSelected(_ isSelected: Bool, at index: Int) {
+        updateCells()
+        guard index < cells.count else { return }
         cells[index].isSelected = isSelected
     }
     
@@ -46,12 +55,14 @@ class ColorViewModel {
     }
     
     func updateContentView(selectedColor: ColorModel?, completion: @escaping (UIColor?, String?) -> Void) {
-        guard let selectedColor = selectedColor else {
+        guard let selectedColor else {
             completion(UIColor.white, " ")
             return
         }
-        if !getAllColors().contains(where: { $0 == selectedColor }) {
-            if let firstColor = getAllColors().first {
+        
+        getAllColors()
+        if !colors.contains(where: { $0 == selectedColor }) {
+            if let firstColor = colors.first {
                 completion(firstColor.color, firstColor.desc)
             } else {
                 completion(UIColor.white, " ")
