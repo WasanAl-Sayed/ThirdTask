@@ -9,9 +9,14 @@ import UIKit
 
 class ColorViewModel {
     
-    private (set) var cells: [CellModel] = []
-    var colors: [ColorModel] = []
+    private(set) var cells: [CellModel] = []
+    private(set) var colors: [ColorModel] = []
         
+    private func getAllColors() {
+        colors.removeAll()
+        colors = CoreDataManager.shared.getColors()
+    }
+    
     func updateCells() {
         getAllColors()
         cells.removeAll()
@@ -24,24 +29,17 @@ class ColorViewModel {
         }
     }
         
-    func getAllColors() {
-        colors.removeAll()
-        colors = CoreDataManager.shared.getColors()
-    }
-        
     func deleteColors() {
         let colorsToDelete: [ColorModel] = cells.compactMap {
             $0.isSelected ? $0.colorModel : nil
         }
         CoreDataManager.shared.deleteColors(colors: colorsToDelete)
         updateCells()
-        getAllColors()
     }
         
     func moveColor(from sourceIndex: Int, to destinationIndex: Int) {
         CoreDataManager.shared.moveColor(from: sourceIndex, to: destinationIndex)
         updateCells()
-        getAllColors()
     }
             
     func setSelected(_ isSelected: Bool, at index: Int) {

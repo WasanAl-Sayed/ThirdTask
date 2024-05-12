@@ -23,7 +23,6 @@ class ColorsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.updateCells()
-        viewModel.getAllColors()
         configureTableView()
         updateNoColorsLabelVisibility()
         selectFirstColorByDefault()
